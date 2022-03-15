@@ -91,5 +91,12 @@ func MeanArray[V NumericInt | NumericUint | NumericFloat](valueArray []V) float6
 		panic("输入的数组不能为空！")
 	}
 
-	return SumFloatArray(valueArray) / float64(len(valueArray))
+	mean := 0.0
+	divisor := float64(len(valueArray))
+
+	for _, v := range valueArray {
+		mean += float64(v) / divisor
+	}
+
+	return mean
 }
