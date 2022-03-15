@@ -1,4 +1,4 @@
-module go_utils
+module github.com/nealzh/go_utils
 
 go 1.18
 
