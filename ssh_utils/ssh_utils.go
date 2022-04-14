@@ -3,7 +3,7 @@ package ssh_utils
 import (
 	"bytes"
 	"fmt"
-	"go_utils/regx_utils"
+	"github.com/nealzh/go_utils/regx_utils"
 	"golang.org/x/crypto/ssh"
 	"log"
 	"strings"
