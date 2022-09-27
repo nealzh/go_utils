@@ -15,6 +15,7 @@ type ServerCmdInfo struct {
 	Port        uint16
 	UserName    string
 	Passwd      string
+	Dir         string
 	Cmd         string
 	Timeout     time.Duration
 	OutputLines *[]string
@@ -54,6 +55,7 @@ func getSshCmdResult(sci *ServerCmdInfo) (string, error) {
 	defer session.Close()
 
 	//执行远程命令
+	chdir_cmd := fmt.Sprintf("bash -l -c 'cd %s'", sci.Dir)
 	current_cmd := fmt.Sprintf("bash -l -c '%s'", sci.Cmd)
 	//combo, err := session.CombinedOutput(current_cmd)
 	//if err != nil {
@@ -63,6 +65,9 @@ func getSshCmdResult(sci *ServerCmdInfo) (string, error) {
 
 	var buf bytes.Buffer
 	session.Stdout = &buf
+	if err := session.Run(chdir_cmd); err != nil {
+		log.Fatal("Failed to run: " + err.Error())
+	}
 	if err := session.Run(current_cmd); err != nil {
 		log.Fatal("Failed to run: " + err.Error())
 	}
