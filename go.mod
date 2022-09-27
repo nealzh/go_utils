@@ -1,6 +1,6 @@
 module github.com/nealzh/go_utils
 
-go 1.18
+go 1.19
 
 require (
 	github.com/google/uuid v1.3.0

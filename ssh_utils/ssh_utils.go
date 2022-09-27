@@ -48,6 +48,7 @@ func getSshCmdResult(sci *ServerCmdInfo) (string, error) {
 
 	//创建ssh-session
 	session, err := sshClient.NewSession()
+
 	if err != nil {
 		log.Fatalln("get session", err)
 		return "", err
@@ -55,8 +56,7 @@ func getSshCmdResult(sci *ServerCmdInfo) (string, error) {
 	defer session.Close()
 
 	//执行远程命令
-	chdir_cmd := fmt.Sprintf("bash -l -c 'cd %s'", sci.Dir)
-	current_cmd := fmt.Sprintf("bash -l -c '%s'", sci.Cmd)
+	current_cmd := fmt.Sprintf("bash -l -c 'cd %s; ./%s'", sci.Dir, sci.Cmd)
 	//combo, err := session.CombinedOutput(current_cmd)
 	//if err != nil {
 	//	log.Fatalln("exec cmd", err)
@@ -65,9 +65,7 @@ func getSshCmdResult(sci *ServerCmdInfo) (string, error) {
 
 	var buf bytes.Buffer
 	session.Stdout = &buf
-	if err := session.Run(chdir_cmd); err != nil {
-		log.Fatal("Failed to run: " + err.Error())
-	}
+
 	if err := session.Run(current_cmd); err != nil {
 		log.Fatal("Failed to run: " + err.Error())
 	}
