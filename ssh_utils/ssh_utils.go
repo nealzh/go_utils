@@ -56,7 +56,7 @@ func getSshCmdResult(sci *ServerCmdInfo) (string, error) {
 	defer session.Close()
 
 	//执行远程命令
-	current_cmd := fmt.Sprintf("bash -l -c 'cd %s; ./%s'", sci.Dir, sci.Cmd)
+	current_cmd := fmt.Sprintf("bash -l -c 'cd %s; %s'", sci.Dir, sci.Cmd)
 	//combo, err := session.CombinedOutput(current_cmd)
 	//if err != nil {
 	//	log.Fatalln("exec cmd", err)
